@@ -1,4 +1,10 @@
+[日本語](README-jp.md)
+[العربية](README-ar.md)
+[Português](README-pt.md)
+[Español](README-es.md)
+
 # Amazon Scraping Project Documentation
+
 
 ## Project Overview
 
@@ -128,4 +134,3 @@ This project is designed to scrape product information from Amazon, process the 
 - The scripts assume that the necessary browsers and drivers are installed and configured properly.
 - Be mindful of Amazon's terms of service and robots.txt when scraping data.
 - Handle the data responsibly and in compliance with applicable laws and regulations.
-
