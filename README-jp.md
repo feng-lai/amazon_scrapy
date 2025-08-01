@@ -1,140 +1,118 @@
-[日本語](README-jp.md)
-[العربية](README-ar.md)
-[Português](README-pt.md)
-[Español](README-es.md)
 
-# Amazon Scraping Project Documentation (日本語)
+[日本語](README-jp.md) | [العربية](README-ar.md) | [Português](README-pt.md) | [Español](README-es.md) | [English](README-en.md)
 
-これは日本語訳の全文です。Amazonのスクレイピングプロジェクトの概要、ファイル説明、実行手順などが含まれています。
+# Amazon スクレイピングプロジェクト ドキュメント（日本語）
 
-# Amazon Scraping Project Documentation
+## プロジェクト概要
 
+このプロジェクトは、Amazon から商品情報をスクレイピングし、データを処理して指定されたサーバーにアップロードするためのものです。Selenium によるウェブ自動化と BeautifulSoup による HTML 解析を活用しています。画像処理、データ抽出、アップロードなどの機能を持つ複数の Python スクリプトで構成されています。
 
-## Project Overview
-
-This project is designed to scrape product information from Amazon, process the data, and upload it to a specified server. It includes multiple Python scripts for different functionalities such as data scraping, image processing, and data uploading. The project utilizes Selenium for web automation and BeautifulSoup for HTML parsing.
-
-## File Descriptions
+## ファイルの説明
 
 ### change.py
 
-- **Purpose**: Downloads images from specified URLs, uploads them to a server, and updates the JSON file with new image URLs.
-- **Functions**:
-  - Downloads images from given URLs.
-  - Uploads images to a server and retrieves new URLs.
-  - Updates the product information JSON file with new image URLs.
-- **Dependencies**: `requests`, `pandas`, `tqdm`, `BeautifulSoup`, `os`.
+- **目的**: 指定された URL から画像をダウンロードし、サーバーにアップロードして JSON ファイルの画像 URL を更新します。
+- **主な処理**:
+  - 画像を URL からダウンロード
+  - サーバーにアップロードして新しい画像 URL を取得
+  - JSON ファイルの該当項目を更新
+- **依存ライブラリ**: `requests`, `pandas`, `tqdm`, `BeautifulSoup`, `os`
 
 ### extract.py
 
-- **Purpose**: Extracts image links from a JSON file and saves them to a text file.
-- **Functions**:
-  - Reads a JSON file containing product information.
-  - Extracts image URLs using regular expressions.
-  - Filters out unwanted URLs based on specified keywords.
-  - Saves the extracted URLs to a text file.
-- **Dependencies**: `json`, `re`, `os`.
+- **目的**: JSON ファイルから画像リンクを抽出してテキストファイルに保存します。
+- **主な処理**:
+  - 商品情報の JSON ファイルを読み込む
+  - 正規表現で画像 URL を抽出
+  - 不要なリンクをキーワードで除外
+  - 結果をテキストファイルに出力
+- **依存ライブラリ**: `json`, `re`, `os`
 
-### product_info.json & updated_product_info.json
+### product_info.json / updated_product_info.json
 
-- **Content**: JSON files containing product information including price, name, images, description, and attributes.
-- **Structure**:
-  - `price`: Product price.
-  - `itm_name`: Product name.
-  - `img1`-`img8`: Product image URLs.
-  - `itm_dsc`: Product description in HTML format.
-  - `cat_id` & `s_id`: Category and store IDs.
-  - `attr`: Product attributes such as color and size options.
+- **内容**: 商品情報（価格、名前、画像、説明、属性など）を含む JSON ファイル
+- **構造**:
+  - `price`: 価格
+  - `itm_name`: 商品名
+  - `img1` ～ `img8`: 商品画像の URL
+  - `itm_dsc`: HTML 形式の商品説明
+  - `cat_id`, `s_id`: カテゴリ ID、店舗 ID
+  - `attr`: 色やサイズなどの属性
 
 ### shop.py
 
-- **Purpose**: Scrapes product details from Amazon's best seller page.
-- **Functions**:
-  - Navigates to Amazon's best seller page.
-  - Extracts product links, prices, and titles.
-  - Collects detailed information including seller profile, ratings, and description.
-  - Saves the data to a CSV file.
-- **Dependencies**: `selenium`, `webdriver_manager`, `pandas`, `time`, `os`.
+- **目的**: Amazon ベストセラーページから商品詳細をスクレイピング
+- **主な処理**:
+  - ページをナビゲートし商品リンクや価格、タイトルを取得
+  - 販売者情報や評価、説明を収集
+  - データを CSV に保存
+- **依存ライブラリ**: `selenium`, `webdriver_manager`, `pandas`, `time`, `os`
 
 ### upload.py
 
-- **Purpose**: Uploads product information from a JSON file to a server.
-- **Functions**:
-  - Reads the product information JSON file.
-  - Sends POST requests to the server with the product data.
-  - Handles responses and errors during the upload process.
-- **Dependencies**: `requests`, `json`, `time`.
+- **目的**: JSON ファイルから読み取った商品データをサーバーにアップロード
+- **主な処理**:
+  - JSON データを読み込んで POST リクエストで送信
+  - レスポンスの確認とエラー処理
+- **依存ライブラリ**: `requests`, `json`, `time`
 
-### size_and_color.py & amazon_item.py & amazon_shop.py & amz.py & bag.py & no_color.py
+### その他のスクリプト（size_and_color.py、amazon_item.py、など）
 
-- **Purpose**: These scripts are variations of scraping scripts designed to extract product information from different Amazon pages.
-- **Common Functions**:
-  - Extract product title, price, images, description, and attributes.
-  - Handle color and size variations.
-  - Save the extracted data to a JSON file.
-- **Dependencies**: `selenium`, `webdriver_manager`, `lxml`, `BeautifulSoup`, `time`, `os`, `json`, `tqdm`.
+- **目的**: 異なる Amazon 商品ページからデータを抽出
+- **主な処理**:
+  - 商品タイトル、価格、画像、説明、属性を取得
+  - カラーやサイズのバリエーションに対応
+  - 結果を JSON に保存
+- **依存ライブラリ**: `selenium`, `webdriver_manager`, `lxml`, `BeautifulSoup`, `time`, `os`, `json`, `tqdm`
 
-## Deployment and Running Instructions
+## 実行およびデプロイ手順
 
-### Environment Setup
+### 環境構築
 
-1. **Python Installation**: Ensure Python 3.x is installed on your system.
-2. **Package Installation**: Install the required packages using pip:
+1. **Python のインストール**: Python 3.x がインストールされていることを確認
+2. **必要パッケージのインストール**:
    ```bash
    pip install requests pandas tqdm beautifulsoup4 selenium lxml
-   ```
-3. **WebDriver Setup**: Download the appropriate WebDriver for your browser (e.g., EdgeDriver for Microsoft Edge) and ensure it's in your system PATH.
 
-### Running the Scripts
+
+3. **WebDriver の準備**: 使用するブラウザ用の WebDriver（例：EdgeDriver）をダウンロードし、PATH を通す
+
+### スクリプトの実行
 
 #### change.py
 
-1. Place the script in the directory containing `product_info.json`.
-2. Run the script:
-   ```bash
-   python change.py
-   ```
-3. The script will create an `updated_product_info.json` file with new image URLs.
+```bash
+python change.py
+```
 
 #### extract.py
 
-1. Place the script in the directory containing the JSON file to extract links from.
-2. Run the script:
-   ```bash
-   python extract.py
-   ```
-3. Specify the input JSON file and output text file as command-line arguments.
+```bash
+python extract.py
+```
 
 #### shop.py
 
-1. Update the target URL in the script if necessary.
-2. Run the script:
-   ```bash
-   python shop.py
-   ```
-3. The script will generate a CSV file with the scraped data.
+```bash
+python shop.py
+```
 
 #### upload.py
 
-1. Ensure the `updated_product_info.json` file is in the same directory.
-2. Update the upload URL and headers in the script if necessary.
-3. Run the script:
-   ```bash
-   python upload.py
-   ```
+```bash
+python upload.py
+```
 
-#### Other Scraping Scripts (size_and_color.py, amazon_item.py, etc.)
+#### その他スクリプト
 
-1. Update the target product link in the script.
-2. Run the script:
-   ```bash
-   python script_name.py
-   ```
-3. The script will generate a JSON file with the scraped product information.
+```bash
+python script_name.py
+```
 
-## Notes
+## 注意事項
 
-- Some scripts use hard-coded URLs and XPaths which may need to be updated if the target website structure changes.
-- The scripts assume that the necessary browsers and drivers are installed and configured properly.
-- Be mindful of Amazon's terms of service and robots.txt when scraping data.
-- Handle the data responsibly and in compliance with applicable laws and regulations.
+* Amazon の規約および robots.txt に従い、適切な方法でデータ収集を行ってください。
+* ハードコードされた URL や XPath がある場合、サイト構造の変更に注意が必要です。
+* すべてのデータ処理は法令と利用規約を遵守して行ってください。
+
+
